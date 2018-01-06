@@ -1,28 +1,21 @@
 import os
-import numpy as np
 import cv2 as cv
-from sklearn.neural_network import MLPClassifier
+import numpy as np
 
-def get_faces(root, file_types):
-  photos = []
-  for cwd, folders, files in os.walk(root):
-    for file in files:
-      if(file.split('.')[-1] in file_types):
-        photos.append(cwd + '/' + file)
-  return photos
+face_detector = cv.CascadeClassifier('ObjectDetector/face.xml')
+eye_detector = cv.CascadeClassifier('ObjectDetector/eye.xml')
 
+cap = cv.VideoCapture('http://192.168.43.80:8080/videofeed')
 
-photos = get_faces('New folder', ['jpg'])
+j=0
+while(j<100):
+  ret, img_o = cap.read()
+  img = cv.cvtColor(img_o, cv.COLOR_BGR2GRAY)
 
-i=0
-for photo in photos:
-  img = cv.imread(photo, 0)
-  img = cv.resize(img, (100,100))
-  cv.imwrite('Faces/user-2.' + str(i) + '.jpg', img)
-  i += 1
-
-for photo in photos:
-  img = cv.imread(photo, 0)
-  img = cv.resize(img, (100, 100))
-  cv.imwrite('Faces/user-2.' + str(i) + '.jpg', img)
-  i += 1
+  face = face_detector.detectMultiScale(img,1.3,3)
+  for x, y, w, h in face:
+    cv.rectangle(img_o, (x,y), (x+w, y+h), (255,255,255), 3)
+  cv.imshow('Look',img_o)
+  j+=1
+  if cv.waitKey(1) & 0xFF == ord('q'):
+        break
