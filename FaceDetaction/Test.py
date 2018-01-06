@@ -13,7 +13,8 @@ def getName(TARGET):
       return chk[2:]
   return 'Not Found'
 
-img_check = cv.imread('Faces/user.2.0.jpg', 0)
+img_check = cv.imread('Faces/user-2.0.jpg', 0)
+
 print img_check
 
 img_check = np.asarray(img_check)
