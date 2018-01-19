@@ -27,7 +27,8 @@ face_detector = cv.CascadeClassifier('ObjectDetector/face.xml')
 eye_detector = cv.CascadeClassifier('ObjectDetector/eye.xml')
 
 name = str(raw_input('Enter name : '))
-cap = cv.VideoCapture('http://192.168.43.80:8080/videofeed')
+#cap = cv.VideoCapture('http://192.168.43.80:8080/videofeed')
+cap = cv.VideoCapture(0)
 
 i = get_id()
 j = 0
